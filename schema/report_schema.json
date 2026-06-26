@@ -1,0 +1,42 @@
+{
+  "posting": {
+    "employer_name": "string|undisclosed",
+    "role": "string",
+    "comp_stated": "string|null",
+    "requirements": ["string"]
+  },
+  "entity": {
+    "resolved": true,
+    "confidence": 0.0,
+    "canonical_name": "string",
+    "domain": "string",
+    "mode": "verified|employer_unverifiable"
+  },
+  "posting_flags": [
+    {
+      "type": "scope_creep",
+      "severity": "high",
+      "explanation": "string",
+      "evidence_quote": "string",
+      "provenance": "inferred_from_posting"
+    }
+  ],
+  "employer_signals": [
+    {
+      "type": "layoffs",
+      "claim": "string",
+      "quote": "string",
+      "source_url": "https://example.com",
+      "provenance": "verified_source"
+    }
+  ],
+  "ledger": {
+    "verified": 0,
+    "inferred": 0,
+    "no_data": 0
+  },
+  "overall": {
+    "risk_band": "low|elevated|high",
+    "caveat": "signals, not verdicts"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "posting": {
+    "employer_name": "Example Corp",
+    "role": "Software Engineer",
+    "comp_stated": "Base salary: $110k - $130k",
+    "requirements": [
+      "5+ years of Python experience",
+      "Experience with AWS and distributed systems",
+      "Excellent communication skills"
+    ]
+  },
+  "entity": {
+    "resolved": true,
+    "confidence": 0.97,
+    "canonical_name": "Example Corp",
+    "domain": "example.com",
+    "mode": "verified"
+  },
+  "posting_flags": [
+    {
+      "type": "scope_creep",
+      "severity": "high",
+      "explanation": "The JD mixes product and engineering responsibilities beyond a single senior IC role.",
+      "evidence_quote": "You will own product strategy, execution, and technical delivery.",
+      "provenance": "inferred_from_posting"
+    }
+  ],
+  "employer_signals": [
+    {
+      "type": "layoffs",
+      "claim": "A recent report indicates the employer reduced staff across multiple teams.",
+      "quote": "Example Corp announced a 15% reduction in workforce across engineering and sales.",
+      "source_url": "https://example.com/news/layoffs",
+      "provenance": "verified_source"
+    }
+  ],
+  "ledger": {
+    "verified": 1,
+    "inferred": 1,
+    "no_data": 0
+  },
+  "overall": {
+    "risk_band": "elevated",
+    "caveat": "signals, not verdicts"
+  }
+}

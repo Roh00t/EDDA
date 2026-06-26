@@ -1,0 +1,39 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 1.5rem;
+  background: #f7f8fb;
+  color: #111;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 12px 30px rgba(20, 30, 80, 0.08);
+  margin-bottom: 1rem;
+}
+
+.flag,
+.signal {
+  border-top: 1px solid #e5e7f0;
+  padding: 0.75rem 0;
+}
+
+.flag:first-child,
+.signal:first-child {
+  border-top: none;
+}
+
+a {
+  color: #1d70ff;
+}
