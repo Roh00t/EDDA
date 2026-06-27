@@ -15,6 +15,70 @@ h1 {
   margin-bottom: 1rem;
 }
 
+.input-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.input-section textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  line-height: 1.5;
+  padding: 0.75rem;
+  border: 1px solid #d5d9e6;
+  border-radius: 8px;
+  resize: vertical;
+  margin-bottom: 0.75rem;
+}
+
+.input-section textarea:focus {
+  outline: 2px solid #1d70ff;
+  outline-offset: 1px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #1d70ff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #1558cc;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.status {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.status.loading {
+  color: #1d70ff;
+  font-weight: 600;
+}
+
+.status.error {
+  color: #b42318;
+  font-weight: 600;
+}
+
 .card {
   background: white;
   border-radius: 12px;

@@ -9,6 +9,16 @@
 <body>
   <main>
     <h1>EDDA Employer Due-Diligence Report</h1>
+
+    <section class="input-section card">
+      <label for="jd-text">Paste job description</label>
+      <textarea id="jd-text" rows="12" placeholder="Paste the full job posting here…"></textarea>
+      <div class="actions">
+        <button type="button" id="analyze-btn">Analyze</button>
+        <span id="status" class="status" aria-live="polite"></span>
+      </div>
+    </section>
+
     <section id="report"></section>
   </main>
   <script src="app.js"></script>
