@@ -1,4 +1,4 @@
-"""MVP analysis pipeline: parse → flag → assemble, never blank."""
+"""MVP analysis pipeline: parse → resolve → flag → signals → assemble, never blank."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ import logging
 
 from analysis.analyzer import analyze_posting
 from analysis.assembler import build_report
-from analysis.models import Posting, Report
+from analysis.models import Entity, EmployerSignal, Posting, Report
 from analysis.parser import parse_posting
 
 log = logging.getLogger("edda")
@@ -21,9 +21,42 @@ def _fallback_posting() -> Posting:
     )
 
 
+def _resolve_entity(posting: Posting) -> Entity | None:
+    try:
+        from retrieval.resolver import resolve_employer
+    except ImportError:
+        log.debug("retrieval.resolver not available — skipping entity resolution")
+        return None
+
+    try:
+        return resolve_employer(posting.employer_name)
+    except Exception:
+        log.exception("resolve_employer failed — using MVP entity fallback")
+        return None
+
+
+def _fetch_employer_signals(entity: Entity) -> list[EmployerSignal]:
+    if entity.mode != "verified":
+        return []
+
+    try:
+        from retrieval.signals import fetch_signals
+    except ImportError:
+        log.debug("retrieval.signals not available — skipping employer signals")
+        return []
+
+    try:
+        return fetch_signals(entity)
+    except Exception:
+        log.exception("fetch_signals failed — returning zero employer signals")
+        return []
+
+
 def analyze(jd_text: str) -> Report:
     posting = _fallback_posting()
-    flags = []
+    flags: list = []
+    entity: Entity | None = None
+    employer_signals: list[EmployerSignal] = []
 
     try:
         posting = parse_posting(jd_text)
@@ -31,11 +64,19 @@ def analyze(jd_text: str) -> Report:
         log.exception("parse_posting failed — returning fallback posting")
 
     try:
+        entity = _resolve_entity(posting)
+    except Exception:
+        log.exception("entity resolution failed unexpectedly — using MVP entity fallback")
+
+    if entity is not None and entity.mode == "verified":
+        employer_signals = _fetch_employer_signals(entity)
+
+    try:
         flags = analyze_posting(jd_text)
     except Exception:
         log.exception("analyze_posting failed — returning zero flags")
 
-    return build_report(posting, flags)
+    return build_report(posting, flags, entity=entity, employer_signals=employer_signals)
 
 
 if __name__ == "__main__":
