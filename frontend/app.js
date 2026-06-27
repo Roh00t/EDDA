@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/analyze";
+const API_URL = "/analyze";
 const MOCK_URL = "fixtures/mock_report.json";
 
 const reportContainer = document.getElementById("report");
