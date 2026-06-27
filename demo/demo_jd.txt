@@ -1,0 +1,18 @@
+Software Engineer — Shopify (Remote)
+
+We're scaling fast and need someone who can hit the ground running — ideally starting within the next two weeks.
+
+Responsibilities:
+- Own full-stack features across web, mobile, and data pipelines
+- Lead architecture decisions and mentor junior engineers
+- Collaborate with design, product, and ML teams on cross-functional initiatives
+- On-call rotation for production incidents
+
+Requirements:
+- 8+ years of experience (this is a mid-level role)
+- Proficiency in Ruby, Go, React, TypeScript, Kafka, Kubernetes, and Postgres
+- Prior experience with payments infrastructure preferred
+
+Compensation: Competitive. Details discussed at offer stage.
+
+Note: We receive a high volume of applications. Only shortlisted candidates will be contacted. Role may be filled at any time — apply immediately.

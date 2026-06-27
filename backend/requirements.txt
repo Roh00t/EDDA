@@ -19,9 +19,7 @@ jsonschema-specifications==2025.9.1
 openai==2.44.0
 pydantic==2.13.4
 pydantic_core==2.46.4
-pyspark==4.0.0
-pyspark-client==4.0.0
-pyspark-connect==4.0.0
+aiofiles==24.1.0
 python-dotenv==1.2.2
 PyYAML==6.0.3
 referencing==0.37.0

@@ -10,6 +10,7 @@ load_dotenv()
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from analysis.pipeline_mvp import analyze as analyze_jd
@@ -66,3 +67,8 @@ async def analyze(request: AnalyzeRequest):
             jd_text = fetched
     report = analyze_jd(jd_text)
     return JSONResponse(content=report.model_dump(mode="json"))
+
+
+_frontend = Path(__file__).resolve().parent.parent / "frontend"
+if _frontend.exists():
+    app.mount("/", StaticFiles(directory=str(_frontend), html=True), name="frontend")
