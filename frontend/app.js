@@ -350,6 +350,9 @@ async function initPreview() {
 
 analyzeBtn.addEventListener("click", analyzePosting);
 
+const previewBtn = document.getElementById("preview-btn");
+previewBtn?.addEventListener("click", initPreview);
+
 jdTextarea.addEventListener("keydown", (event) => {
   if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
     event.preventDefault();
@@ -357,4 +360,4 @@ jdTextarea.addEventListener("keydown", (event) => {
   }
 });
 
-initPreview();
+
