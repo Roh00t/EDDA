@@ -23,6 +23,13 @@
       "explanation": "The JD mixes product and engineering responsibilities beyond a single senior IC role.",
       "evidence_quote": "You will own product strategy, execution, and technical delivery.",
       "provenance": "inferred_from_posting"
+    },
+    {
+      "type": "compensation_vague",
+      "severity": "medium",
+      "explanation": "Equity and bonus details are unspecified, making total compensation impossible to evaluate.",
+      "evidence_quote": "Competitive total compensation package.",
+      "provenance": "no_data_found"
     }
   ],
   "employer_signals": [
@@ -37,7 +44,7 @@
   "ledger": {
     "verified": 1,
     "inferred": 1,
-    "no_data": 0
+    "no_data": 1
   },
   "overall": {
     "risk_band": "elevated",

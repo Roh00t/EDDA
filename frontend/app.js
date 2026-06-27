@@ -1,4 +1,10 @@
-const API_URL = "http://localhost:8000/analyze";
+// Hostname-based API URL: use localhost for local dev, production origin elsewhere.
+// When the production URL is known, update the else branch to the exact URL.
+const _isLocal =
+  location.hostname === "localhost" || location.hostname === "127.0.0.1";
+const API_URL = _isLocal
+  ? "http://localhost:8000/analyze"
+  : location.origin + "/analyze";
 const MOCK_URL = "fixtures/mock_report.json";
 
 const reportContainer = document.getElementById("report");
@@ -79,6 +85,15 @@ function showLoading() {
       <div class="spinner" aria-hidden="true"></div>
       <p class="loading-text">Analyzing posting…</p>
       <p class="loading-subtext">This may take a moment while we read the job description.</p>
+    </div>
+  `;
+}
+
+function showErrorCard(message) {
+  reportContainer.hidden = false;
+  reportContainer.innerHTML = `
+    <div class="card error-card" role="alert">
+      <p class="error-card-msg">${escapeHtml(message)}</p>
     </div>
   `;
 }
@@ -220,7 +235,7 @@ function renderEmployerSignals(signals, entity) {
         <h2>Employer signals</h2>
         <div class="empty-state">
           ${provenanceBadge("no_data_found")}
-          <p>Employer could not be verified — no web signals were collected.</p>
+          <p>Employer could not be verified — web signals unavailable.</p>
         </div>
       </section>
     `;
@@ -318,8 +333,8 @@ async function analyzePosting() {
     });
 
     if (!response.ok) {
-      reportContainer.hidden = true;
-      setStatus(`Analysis failed (${response.status}). Check the backend logs.`, "error");
+      showErrorCard(`Analysis failed (${response.status}) — try again.`);
+      setStatus(`Analysis failed (${response.status}).`, "error");
       return;
     }
 
@@ -327,11 +342,11 @@ async function analyzePosting() {
     renderReport(report, "live");
     setStatus("Live report ready.", "live");
   } catch (error) {
-    reportContainer.hidden = true;
     const message =
       error instanceof TypeError
-        ? "Could not connect to backend. Is uvicorn running on port 8000?"
-        : error.message || "Unexpected error while rendering the report.";
+        ? "Could not connect to backend — try again."
+        : "Analysis failed — try again.";
+    showErrorCard(message);
     setStatus(message, "error");
   } finally {
     analyzeBtn.disabled = false;

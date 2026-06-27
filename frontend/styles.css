@@ -110,6 +110,16 @@ button:hover:not(:disabled) {
   background: var(--accent-dark);
 }
 
+button.secondary {
+  background: var(--surface);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: #e8f0ff;
+}
+
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -471,6 +481,16 @@ button:disabled {
 .empty-state p {
   margin: 0;
   color: var(--muted);
+}
+
+.error-card {
+  border-left: 4px solid var(--error);
+}
+
+.error-card-msg {
+  margin: 0;
+  font-weight: 600;
+  color: var(--error);
 }
 
 .loading-card {

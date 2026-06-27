@@ -3,7 +3,9 @@ import os
 from exa_py import Exa
 
 
-COMPANIES = ["Grab", "Shopee", "Carro", "Endowus"]
+# Top 3 demo companies by signal richness from preflight run (2026-06-27):
+# Microsoft=3 signals, Shopify=2 signals, Google=1 signal
+COMPANIES = ["Microsoft", "Shopify", "Google"]
 
 
 def result_text(result):

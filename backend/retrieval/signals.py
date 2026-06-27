@@ -12,6 +12,16 @@ from analysis.models import EmployerSignal, Entity
 
 SIGNAL_TYPES = ("layoffs", "funding", "lawsuits", "reviews")
 
+# Cache: source_url -> raw source text, populated during fetch_signals.
+# Used by the grounding gate to verify quote in source_text without storing
+# source_text inside EmployerSignal (which would require editing models.py).
+_source_text_cache: dict[str, str] = {}
+
+
+def get_signal_source_text(source_url: str) -> str:
+    """Return the raw source text for a given signal URL, or '' if not cached."""
+    return _source_text_cache.get(str(source_url), "")
+
 
 @dataclass(frozen=True)
 class RetrievedDoc:
@@ -63,7 +73,7 @@ def _sentence_with(text: str, terms: tuple[str, ...], required_terms: tuple[str,
         lowered = cleaned.lower()
         has_signal_term = any(term in lowered for term in terms)
         has_required_term = any(term in lowered for term in required_terms)
-        if 40 <= len(cleaned) <= 320 and has_signal_term and has_required_term:
+        if 40 <= len(cleaned) <= 400 and has_signal_term and has_required_term:
             return cleaned
     return None
 
@@ -80,7 +90,7 @@ def _claim_from_quote(signal_type: str, quote: str) -> str:
 
 def _drafts_for_doc(doc: RetrievedDoc, company_terms: tuple[str, ...] = ()) -> list[SignalDraft]:
     checks = {
-        "layoffs": ("layoff", "lay off", "job cut", "cuts jobs", "retrench"),
+        "layoffs": ("layoff", "lay off", "laid off", "job cut", "cuts jobs", "retrench"),
         "funding": ("raises", "raised", "funding round", "fundraise", "series a", "series b", "series c"),
         "lawsuits": ("lawsuit", "class action", "settlement", "securities fraud", "litigation"),
         "reviews": ("glassdoor", "employee review", "employee reviews", "rated by employees"),
@@ -151,6 +161,9 @@ def verified_signals_from_drafts(
             continue
         if not verify_quote(draft.quote, text_by_url[draft.source_url]):
             continue
+        # Populate the source text cache so the grounding gate can re-verify
+        # quote in source_text without requiring source_text on EmployerSignal.
+        _source_text_cache[draft.source_url] = text_by_url[draft.source_url]
         signals.append(
             EmployerSignal(
                 type=draft.type,
