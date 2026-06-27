@@ -71,10 +71,15 @@ async def analyze(request: AnalyzeRequest):
     return JSONResponse(content=report.model_dump(mode="json"))
 
 
-# Serve the static frontend as a single service (must be mounted AFTER the API
-# routes above so /analyze and /healthz take precedence over the catch-all).
-_FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
-if _FRONTEND_DIR.is_dir():
-    app.mount("/", StaticFiles(directory=_FRONTEND_DIR, html=True), name="frontend")
+# Serve the built React frontend as a single service (must be mounted AFTER the
+# API routes above so /analyze and /healthz take precedence over the catch-all).
+# The deploy build runs `npm run build` (Vite) which emits frontend/dist.
+_FRONTEND_DIST = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if _FRONTEND_DIST.is_dir():
+    app.mount("/", StaticFiles(directory=_FRONTEND_DIST, html=True), name="frontend")
 else:
-    log.warning("frontend dir not found at %s — serving API only", _FRONTEND_DIR)
+    log.warning(
+        "frontend build not found at %s — serving API only. "
+        "Run `cd frontend && npm install && npm run build` first.",
+        _FRONTEND_DIST,
+    )
