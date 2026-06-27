@@ -4,28 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EDDA — Employer Due-Diligence</title>
-  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main>
-    <header class="page-header">
-      <h1>EDDA</h1>
-      <p class="tagline">Employer due-diligence — signals, not verdicts.</p>
-    </header>
-
-    <section class="input-section card">
-      <label for="jd-text">Paste job description</label>
-      <p class="input-hint">Paste just the job body for cleaner results — skip page chrome like cookie banners and footers.</p>
-      <textarea id="jd-text" rows="12" placeholder="Paste the job posting here…"></textarea>
-      <div class="actions">
-        <button type="button" id="analyze-btn">Analyze</button>
-        <button type="button" id="preview-btn" class="secondary">Preview layout (sample data)</button>
-        <span id="status" class="status" aria-live="polite"></span>
-      </div>
-    </section>
-
-    <section id="report" class="report" hidden aria-live="polite"></section>
-  </main>
-  <script src="app.js"></script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

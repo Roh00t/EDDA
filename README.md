@@ -27,9 +27,12 @@ EDDA/
 │   ├── retrieval/            # Exa entity resolution + web signals (A)
 │   └── requirements.txt
 └── frontend/
-    ├── index.html            # interactive JD + trust ledger (C)
-    ├── app.js
-    └── styles.css
+    ├── index.html            # Vite shell for interactive JD + trust ledger (C)
+    ├── package.json
+    └── src/
+        ├── App.jsx
+        ├── main.jsx
+        └── styles.css
 ```
 
 ---
@@ -77,10 +80,13 @@ This must print a path ending in `EDDA/.venv/bin/python`. If it still shows an `
 
 > **Anaconda caveat:** if a new terminal reopens in `(base)` automatically, run `conda deactivate` before `source .venv/bin/activate` each time, or disable it permanently with `conda config --set auto_activate_base false`. Keep the venv activated whenever you work.
 
-**3. Install backend requirements.**
+**3. Install dependencies.**
 
 ```bash
 pip install -r backend/requirements.txt
+cd frontend
+npm install
+cd ..
 ```
 
 **4. Set up your keys.**
@@ -123,7 +129,7 @@ Leave this running. You should see `Application startup complete.`
 
 ```bash
 cd EDDA/frontend
-python3 -m http.server 5500
+npm run dev
 ```
 
 Then open **http://localhost:5500** in your browser.
