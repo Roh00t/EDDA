@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "edda-backend",
+      "runtimeExecutable": "D:\\Projects\\EDDA\\.venv\\Scripts\\uvicorn.exe",
+      "runtimeArgs": ["app:app"],
+      "port": 8080,
+      "autoPort": true,
+      "cwd": "D:\\Projects\\EDDA\\backend"
+    }
+  ]
+}

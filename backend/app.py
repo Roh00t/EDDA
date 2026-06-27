@@ -1,6 +1,7 @@
 import logging
 import os
 import re
+from pathlib import Path
 
 import httpx
 from dotenv import load_dotenv
@@ -42,7 +43,7 @@ async def check_openai_key():
         log.info("OPENAI_API_KEY detected")
 
 
-@app.get("/")
+@app.get("/health")
 async def health():
     return {"status": "ok"}
 
