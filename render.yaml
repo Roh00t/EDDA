@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: edda
+    runtime: python
+    region: singapore
+    branch: testing
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: EXA_API_KEY
+        sync: false
