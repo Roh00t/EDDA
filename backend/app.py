@@ -1,6 +1,8 @@
 import logging
 import os
+import re
 
+import httpx
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -44,7 +46,23 @@ async def health():
     return {"status": "ok"}
 
 
+def _fetch_url_text(url: str) -> str | None:
+    # ponytail: raw httpx + regex strip — good enough for hackathon JD pages
+    try:
+        r = httpx.get(url, timeout=5, follow_redirects=True)
+        r.raise_for_status()
+        return re.sub(r"<[^>]+>", " ", r.text)
+    except Exception:
+        log.warning("source_url fetch failed — falling back to jd_text")
+        return None
+
+
 @app.post("/analyze")
 async def analyze(request: AnalyzeRequest):
-    report = analyze_jd(request.jd_text)
+    jd_text = request.jd_text
+    if request.source_url:
+        fetched = _fetch_url_text(request.source_url)
+        if fetched:
+            jd_text = fetched
+    report = analyze_jd(jd_text)
     return JSONResponse(content=report.model_dump(mode="json"))
